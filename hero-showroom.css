@@ -1,0 +1,186 @@
+/* One duration keeps the showroom, heading, and navigation in sync. */
+.home-page { --showroom-cycle: 12s; }
+
+/* The hero sits behind the transparent navigation at the top of the page. */
+.home-page .site-header {
+  position: fixed;
+  background: transparent;
+  color: #171410;
+  border-bottom-color: transparent;
+}
+
+.home-page .site-header.scrolled {
+  background: #fff;
+  /* Keep the solid white header readable during the hero animation. */
+  color: var(--ink) !important;
+  border-bottom-color: var(--line);
+}
+
+.hero.showroom-hero {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: 1672 / 941;
+  padding: 0;
+  background: #171410;
+}
+
+.showroom-scene,
+.showroom-images,
+.showroom-images img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.showroom-images img {
+  display: block;
+  object-fit: contain;
+}
+
+.showroom-gold { opacity: 0; }
+
+/* Shade only the left edge so the lettering leaves the showroom clear. */
+.showroom-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(15, 10, 7, .48), rgba(15, 10, 7, .2) 27%, transparent 45%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.showroom-copy {
+  position: absolute;
+  z-index: 1;
+  inset: 0 auto 0 3.5%;
+  width: 26%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 0;
+  text-align: left;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.showroom-copy h1 {
+  margin: 0;
+  color: #fff9ef;
+  font: 500 clamp(24px, 3.6vw, 60px)/1.08 var(--serif);
+  letter-spacing: -.03em;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, .65);
+}
+
+.showroom-copy h1 em {
+  color: #f2cf94;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.showroom-copy p {
+  max-width: 30ch;
+  margin: clamp(12px, 1.5vw, 24px) 0 0;
+  color: #f5eadd;
+  font: 400 clamp(13px, 1.15vw, 18px)/1.65 var(--serif);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, .65);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-page:has(.showroom-hero.is-ready) .site-header {
+    animation: showroom-nav-reveal var(--showroom-cycle) ease-in-out infinite;
+  }
+
+  .home-page:has(.showroom-hero.is-paused) .site-header {
+    animation-play-state: paused;
+  }
+
+  .showroom-hero.is-ready .showroom-gold,
+  .showroom-hero.is-ready::after {
+    animation: showroom-gold-reveal var(--showroom-cycle) ease-in-out infinite;
+  }
+
+  .showroom-hero.is-ready .showroom-copy {
+    animation: showroom-copy-reveal var(--showroom-cycle) ease-in-out infinite;
+  }
+
+  .showroom-hero.is-paused .showroom-gold,
+  .showroom-hero.is-paused .showroom-copy,
+  .showroom-hero.is-paused::after {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes showroom-nav-reveal {
+  0%, 8%, 100% { color: #171410; }
+  28%, 72% { color: #fff; }
+}
+
+@keyframes showroom-gold-reveal {
+  0%, 8%, 100% { opacity: 0; }
+  28%, 72% { opacity: 1; }
+}
+
+/* Reveal with the gold image; clear the copy before daylight returns. */
+@keyframes showroom-copy-reveal {
+  0%, 16%, 100% { opacity: 0; transform: translateY(16px); }
+  28%, 70% { opacity: 1; transform: translateY(0); }
+  82% { opacity: 0; transform: translateY(-10px); }
+  83% { opacity: 0; transform: translateY(16px); }
+}
+
+.showroom-hero.is-fallback .showroom-copy {
+  opacity: 1;
+  transform: none;
+}
+
+.showroom-hero.is-fallback::after { opacity: 1; }
+
+@media (max-width: 600px) {
+  /* Give the heading and paragraph room below the full showroom photograph. */
+  .hero.showroom-hero { aspect-ratio: auto; }
+
+  .showroom-scene {
+    position: relative;
+    inset: auto;
+    height: auto;
+    aspect-ratio: 1672 / 941;
+  }
+
+  .showroom-copy {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    padding: 24px 6vw 32px;
+  }
+
+  .showroom-copy h1 {
+    font-size: clamp(30px, 7vw, 42px);
+    line-height: 1.08;
+  }
+
+  .showroom-copy p {
+    max-width: 34ch;
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page .site-header {
+    color: #fff;
+    transition: none;
+  }
+
+  .showroom-hero .showroom-gold,
+  .showroom-hero::after,
+  .showroom-hero .showroom-copy { opacity: 1; }
+
+  .showroom-hero .showroom-copy { transform: none; }
+}

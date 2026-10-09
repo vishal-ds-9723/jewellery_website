@@ -1,0 +1,1 @@
+<footer class="site-footer"><a class="wordmark" href="{{ route('home') }}">R.A.PARIKH<span>JEWELLERS</span></a><p>Designed for the moments that stay.</p><div><a href="{{ route('home') }}">Instagram</a><a href="{{ route('contact') }}">Shipping &amp; returns</a><a href="{{ route('contact') }}">Care guide</a></div></footer>

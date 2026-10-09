@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact R.A. Parikh Jewellers for jewellery enquiries and private appointments.">
+  <title>Contact | R.A. Parikh Jewellers</title>
+  <link rel="canonical" href="https://raparikh.thelayout.co.in/contact.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="contact.css">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body class="contact-page">
+  <header class="site-header scrolled" id="top">
+    <a class="wordmark" href="index.html" aria-label="R.A. Parikh Jewellers home">
+      <img class="wordmark-logo" src="assets/ra-parikh-logo.png" width="580" height="554" alt="" decoding="async">
+      <span class="wordmark-text">R.A.PARIKH<span>JEWELLERS</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="collections.html">Collections</a>
+      <a href="about.html">Our story</a>
+      
+    </nav>
+    <div class="header-actions">
+      <a class="bag-link" href="contact.html" aria-current="page">Contact</a>
+      <a class="appointment-cta" href="contact.html?appointment=video-call#enquiry-form"><span>Video Call Appointment</span></a>
+      <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="contact-layout" aria-labelledby="contact-title">
+      <div class="contact-visual">
+        <img src="images/bridal-set.png" alt="Handcrafted gold bridal necklace and earrings">
+        <div class="image-caption"><span>Private consultations</span><span>Billimora · India</span></div>
+      </div>
+
+      <div class="enquiry-panel">
+        <div class="form-heading">
+          <h1 id="contact-title">Now you can pre-book your <em>video call slot.</em></h1>
+          <p>Tell us what you are looking for. Our jewellery team will get in touch to guide you personally.</p>
+        </div>
+
+        <form class="enquiry-form" id="enquiry-form">
+          <div class="field-row">
+            <div class="field"><label for="name">Name</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="phone">Contact number</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+            <div class="field"><label for="shopping-interest">What are you looking for?</label><select id="shopping-interest" name="shopping_interest"><option value="" selected disabled>Select an option</option><option value="men">Men</option><option value="women">Women</option><option value="gifting">Gifting</option><option value="silver">Silver</option></select></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="appointment-date">Appointment date</label><input id="appointment-date" name="appointment_date" type="date" required></div>
+            <div class="field"><label for="appointment-slot">Preferred slot</label><select id="appointment-slot" name="appointment_slot" required><option value="" selected disabled>Select a slot</option><option value="morning">Morning</option><option value="evening">Evening</option></select></div>
+          </div>
+          <div class="field"><label for="message">Message</label><textarea id="message" name="message" rows="4" placeholder="How can we help?" required></textarea></div>
+          <button class="submit-button" type="submit">Submit enquiry <span>↗</span></button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="contact-details" aria-label="Contact details">
+      <p>Prefer to speak directly?</p>
+      <div><span>Call</span><a href="tel:+919624111899 ">+91 9624111899 </a></div>
+      <div><span>Email</span><a href="mailto:hello@raparikh.com">raparikhjewellers@yahoo.co.in
+</a></div>
+      <div><span>Visit</span><p>Billimora(E), Gujarat</p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><a class="wordmark" href="index.html">R.A.PARIKH<span>JEWELLERS</span></a><p>Designed for the moments that stay.</p><div><a href="index.html">Instagram</a><a href="contact.html">Shipping &amp; returns</a><a href="contact.html">Care guide</a></div></footer>
+  <script src="contact.js"></script>
+</body>
+</html>

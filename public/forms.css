@@ -1,0 +1,8 @@
+.form-trap { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); pointer-events: none; }
+[data-ajax-form] [aria-invalid="true"] { border-color: #a52f2f; }
+.field-error { display: block; color: #982727; font-size: 12px; line-height: 1.5; margin: 6px 0; }
+.form-status { height: auto; min-height: 24px; }
+.form-status[data-state="error"], .server-errors { color: #982727; }
+.form-status[data-state="success"] { color: #42713b; }
+[data-ajax-form] button:disabled { opacity: .6; cursor: wait; transform: none; }
+.server-errors { font-size: 13px; padding-left: 20px; }

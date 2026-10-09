@@ -13,3 +13,12 @@
 @media (min-width: 851px) {
   .intro-section { padding-right: 6vw; }
 }
+
+/* Reserve the video space before it loads; keep the complete frame visible. */
+.showroom-film-section { padding: 0 10vw 100px; }
+.showroom-film { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: #17130f; }
+.showroom-film-player { display: block; width: 100%; height: auto; aspect-ratio: 832 / 464; object-fit: contain; }
+.showroom-film-player:focus-visible { outline: 3px solid var(--gold); outline-offset: -3px; }
+.showroom-film-error { color: var(--muted); }
+.showroom-film-error a { text-decoration: underline; }
+@media (max-width: 850px) { .showroom-film-section { padding: 0 7vw 70px; } }

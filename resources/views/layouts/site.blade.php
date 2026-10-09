@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   @stack('styles')
-  <link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('forms.css') }}">
+  <link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/forms.css') }}">
 </head>
 <body class="@yield('bodyClass')">
   @unless(View::hasSection('hideNavigation'))
@@ -25,6 +25,6 @@
     @include('partials.footer')
   @endunless
   @stack('scripts')
-  <script src="{{ \App\Support\SiteAsset::url('forms.js') }}" defer></script>
+  <script src="{{ \App\Support\SiteAsset::url('js/forms.js') }}" defer></script>
 </body>
 </html>

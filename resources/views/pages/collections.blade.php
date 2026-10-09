@@ -3,10 +3,10 @@
 @section('description', 'Explore bridal, signature, and everyday jewellery collections by R.A. Parikh Jewellers.')
 @section('bodyClass', 'collections-page')
 @push('styles')
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('collections.css') }}">
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('shared.css') }}">
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('collection-links.css') }}">
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('mens-collection.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/collections.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/shared.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/collection-links.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/mens-collection.css') }}">
 @endpush
 @section('content')
 <main>
@@ -84,5 +84,5 @@
   </main>
 @endsection
 @push('scripts')
-<script src="{{ \App\Support\SiteAsset::url('collections.js') }}"></script>
+<script src="{{ \App\Support\SiteAsset::url('js/collections.js') }}"></script>
 @endpush

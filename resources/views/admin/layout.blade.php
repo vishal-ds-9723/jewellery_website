@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex,nofollow">
   <title>@yield('title', 'Enquiries') | R.A. Parikh</title>
-  <link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('admin.css') }}">
+  <link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/admin.css') }}">
 </head>
 <body>
 <header class="admin-header">

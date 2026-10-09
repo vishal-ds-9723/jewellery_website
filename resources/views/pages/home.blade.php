@@ -3,10 +3,10 @@
 @section('description', 'Aavya Fine Jewellery - contemporary heirlooms, made for the moments that become family stories.')
 @section('bodyClass', 'home-page')
 @push('styles')
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('styles.css') }}">
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('shared.css') }}">
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('home-collection.css') }}">
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('hero-showroom.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/styles.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/shared.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/home-collection.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/hero-showroom.css') }}">
 @endpush
 @section('content')
 <main>
@@ -113,6 +113,6 @@
 <div class="toast" role="status" aria-live="polite"></div>
 @endsection
 @push('scripts')
-<script src="{{ \App\Support\SiteAsset::url('hero-showroom.js') }}" defer></script>
-<script src="{{ \App\Support\SiteAsset::url('script.js') }}"></script>
+<script src="{{ \App\Support\SiteAsset::url('js/hero-showroom.js') }}" defer></script>
+<script src="{{ \App\Support\SiteAsset::url('js/script.js') }}"></script>
 @endpush

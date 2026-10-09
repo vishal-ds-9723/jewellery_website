@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminSessionController;
 use App\Http\Controllers\EnquiryController;
@@ -18,7 +19,7 @@ $stateless = [
 ];
 
 Route::view('/', 'pages.home')->name('home');
-Route::view('/about', 'pages.about')->name('about')->withoutMiddleware($stateless);
+Route::get('/about', AboutController::class)->name('about')->withoutMiddleware($stateless);
 Route::view('/collections', 'pages.collections')->name('collections')->withoutMiddleware($stateless);
 Route::view('/contact', 'pages.contact')->name('contact');
 Route::view('/product', 'pages.product')->name('product')->withoutMiddleware($stateless);

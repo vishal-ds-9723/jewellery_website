@@ -3,8 +3,8 @@
 @section('description', 'Contact R.A. Parikh Jewellers for jewellery enquiries and private appointments.')
 @section('bodyClass', 'contact-page')
 @push('styles')
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('contact.css') }}">
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('shared.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/contact.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/shared.css') }}">
 @endpush
 @section('content')
 <main>
@@ -53,5 +53,5 @@
   </main>
 @endsection
 @push('scripts')
-<script src="{{ \App\Support\SiteAsset::url('contact.js') }}"></script>
+<script src="{{ \App\Support\SiteAsset::url('js/contact.js') }}"></script>
 @endpush

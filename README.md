@@ -1,6 +1,6 @@
 # R.A. Parikh Jewellers — Laravel / Blade
 
-The working website is now a Laravel application with Blade pages, AJAX appointment enquiries, and newsletter subscriptions stored in MySQL. The original HTML/CSS/JS files at the project root are retained as the pre-conversion reference; edit resources/views and public for the running site.
+The working website is now a Laravel application with Blade pages, AJAX appointment enquiries, and newsletter subscriptions stored in MySQL. The original static site is grouped in public/legacy-site/. Edit resources/views, public/css, and public/js for the running site. See [project structure](docs/PROJECT-STRUCTURE.md).
 
 ## Local development
 
@@ -59,7 +59,7 @@ The dashboard lists enquiries and newsletter signups, filters enquiries by statu
 - resources/views/layouts/site.blade.php: shared page layout
 - resources/views/partials/: navigation, footer, CSRF/honeypot fields
 - resources/views/admin/: login and enquiry dashboard
-- public/forms.js: shared AJAX submission behavior
+- public/js/forms.js: shared AJAX submission behavior
 - app/Http/Requests/: validation
 - app/Http/Controllers/: form storage and admin actions
 - app/Models/: enquiries and newsletter subscribers
@@ -70,11 +70,15 @@ The dashboard lists enquiries and newsletter signups, filters enquiries by statu
 
     composer test
     php artisan optimize
-    node --check public/forms.js
+    node --check public/js/forms.js
 
-Verification completed locally: 25 automated tests (176 assertions), compiled Blade templates, valid Composer metadata, and real browser AJAX submissions persisted in MySQL. Browser checks also covered missing/invalid CSRF credentials without trusted origin metadata, retained input after server/network errors, duplicate clicks, newsletter deduplication, mobile viewport fit, and protected admin access. Synthetic database records were removed after verification.
+Verification completed locally: 28 automated tests (199 assertions), compiled Blade templates, valid Composer metadata, and real browser AJAX submissions persisted in MySQL. Browser checks also covered missing/invalid CSRF credentials without trusted origin metadata, retained input after server/network errors, duplicate clicks, newsletter deduplication, mobile viewport fit, and protected admin access. Synthetic database records were removed after verification.
 
 Automated feature tests use SQLite in memory, not the local MySQL database. They cover form persistence, validation, duplicate requests, spam fields, India-date handling, rate limits, database failure handling, non-JavaScript submissions, administrator access, login/logout, escaped messages, CSV export, cache privacy, stable cursor pagination, bounded queries, and export limits.
+
+## About video
+
+The showroom video above the closing About section is managed by Spatie Media Library. See [video preparation, import, and playback](docs/ABOUT-VIDEO.md).
 
 ## Hosting
 

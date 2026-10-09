@@ -1,4 +1,5 @@
 *.log
+*.zip
 .DS_Store
 .env
 .env.backup
@@ -29,3 +30,6 @@ Thumbs.db
 /storage/framework/xampp/
 /storage/framework/xampp-httpd.pid
 /storage/framework/browser-check
+
+/public/media/
+/storage/framework/video-tools/

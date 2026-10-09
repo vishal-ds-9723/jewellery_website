@@ -3,8 +3,8 @@
 @section('description', 'Discover R.A. Parikh Jewellers in Billimora: traditional and contemporary jewellery, expert-checked quality, and transparent prices and policies.')
 @section('bodyClass', 'about-page')
 @push('styles')
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('about.css') }}">
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('shared.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/about.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/shared.css') }}">
 @endpush
 @section('content')
 <main>
@@ -40,6 +40,24 @@
       </div>
     </section>
 
+    @if(!empty($showroomVideo['url']))
+    <section class="showroom-film-section section-shell" aria-label="A visit to our showroom">
+      <p class="overline">Inside our showroom</p>
+      <figure class="showroom-film">
+        <video id="showroom-film" class="showroom-film-player" width="832" height="464"
+          controls muted loop playsinline preload="none"
+          @if($showroomVideo['poster']) poster="{{ $showroomVideo['poster'] }}" @endif
+          aria-label="R.A. Parikh Jewellers showroom video">
+          <source src="{{ $showroomVideo['url'] }}" type="video/mp4">
+          Your browser does not support this video. <a href="{{ $showroomVideo['url'] }}">Watch the showroom video</a>.
+        </video>
+      </figure>
+      <p class="showroom-film-error" id="showroom-film-error" role="status" hidden>
+        The video could not load. <a href="{{ $showroomVideo['url'] }}">Open the video</a> to try again.
+      </p>
+    </section>
+    @endif
+
     <section class="closing-section">
       <div class="closing-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
       <div class="closing-content reveal"><p class="overline">Visit our showroom</p><h2>Find a piece<br><em>for you.</em></h2><p>Explore our collection in Billimora and let our team help you choose a design for your occasion and budget.</p><a class="closing-button" href="https://maps.app.goo.gl/yTkJx2cxSU24KZjD7"  target="_blank">Visit our Showroom</a></div>
@@ -48,5 +66,5 @@
   </main>
 @endsection
 @push('scripts')
-<script src="{{ \App\Support\SiteAsset::url('about.js') }}"></script>
+<script src="{{ \App\Support\SiteAsset::url('js/about.js') }}"></script>
 @endpush

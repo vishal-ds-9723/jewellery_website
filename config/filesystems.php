@@ -47,6 +47,16 @@ return [
             'report' => false,
         ],
 
+        // Apache serves Media Library files directly, including HTTP range requests.
+        // A project-local public disk avoids Windows symlink requirements.
+        'media' => [
+            'driver' => 'local',
+            'root' => public_path('media'),
+            'url' => '/media',
+            'visibility' => 'public',
+            'throw' => true,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

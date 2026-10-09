@@ -4,8 +4,8 @@
 @section('bodyClass', '')
 @section('hideNavigation', 'true')
 @push('styles')
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('product.css') }}">
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('shared.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/product.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/shared.css') }}">
 @endpush
 @section('content')
 <main class="product-detail">
@@ -24,5 +24,5 @@
   </main>
 @endsection
 @push('scripts')
-<script src="{{ \App\Support\SiteAsset::url('product.js') }}"></script>
+<script src="{{ \App\Support\SiteAsset::url('js/product.js') }}"></script>
 @endpush

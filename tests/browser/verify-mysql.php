@@ -16,11 +16,13 @@ if (! preg_match('/^qa-[a-f0-9-]{36}@example\.com$/', $email) || config('databas
 try {
     $enquiries = App\Models\Enquiry::where('email', $email)->count();
     $subscribers = App\Models\NewsletterSubscriber::where('email', $email)->count();
-    if (! $report['passed'] || $enquiries !== 1 || $subscribers !== 1) {
-        throw new RuntimeException("Browser result or MySQL counts failed: enquiries={$enquiries}, subscribers={$subscribers}.");
+    $confirmations = Illuminate\Support\Facades\DB::table('jobs')->where('queue', 'enquiry-confirmations')->where('payload', 'like', '%'.$email.'%')->count();
+    if (! $report['passed'] || $enquiries !== 1 || $subscribers !== 1 || $confirmations !== 1) {
+        throw new RuntimeException("Browser result or MySQL counts failed: enquiries={$enquiries}, subscribers={$subscribers}, confirmations={$confirmations}.");
     }
-    echo "MySQL verified: exactly one enquiry and one normalized newsletter signup persisted.\n";
+    echo "MySQL verified: exactly one enquiry, one queued confirmation and one normalized newsletter signup persisted.\n";
 } finally {
+    Illuminate\Support\Facades\DB::table('jobs')->where('queue', 'enquiry-confirmations')->where('payload', 'like', '%'.$email.'%')->delete();
     App\Models\Enquiry::where('email', $email)->delete();
     App\Models\NewsletterSubscriber::where('email', $email)->delete();
     echo "Removed only this browser check's synthetic records.\n";

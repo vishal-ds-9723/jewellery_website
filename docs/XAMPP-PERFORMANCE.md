@@ -27,7 +27,7 @@ Apache serves only public/, listens on loopback, and writes logs under storage/l
 - Appointment-date filtering compares the DATE column directly. A compound index on status, appointment_date, id supports combined dashboard filters. Existing individual date/status indexes remain.
 - CSV exports stream 500-row batches, default to at most 5,000 matching records, and allow two export attempts per administrator per minute. Set EXPORT_MAX_ROWS in .env if necessary (hard maximum 10,000); filter larger lists by date/status.
 - Existing unique submission IDs and newsletter email constraints prevent duplicate inserts under retries. Public form rate limits are unchanged.
-- File sessions/cache remain suitable for this single-machine setup. No Redis, queue daemon, external mail service, or global MySQL tuning was added. Success is returned after MySQL has accepted the write.
+- File sessions/cache remain suitable for this single-machine setup. No Redis or global MySQL tuning is required. Enquiry confirmations now use a dedicated database queue and mail worker; see [email setup](ENQUIRY-EMAIL.md). Success is returned after MySQL commits both the enquiry and pending confirmation.
 
 ## Development and cache refresh
 

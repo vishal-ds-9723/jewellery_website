@@ -24,5 +24,9 @@ $poster = Join-Path $destination 'ra-vlog-poster.jpg'
 if ($LASTEXITCODE -ne 0) { throw 'Video encoding failed.' }
 & $Ffmpeg -hide_banner -loglevel error -y -ss $PosterSeconds -i $video -frames:v 1 -q:v 2 -update 1 $poster
 if ($LASTEXITCODE -ne 0) { throw 'Poster extraction failed.' }
+$publicVideoFolder = Join-Path $siteRoot 'public\videos'
+New-Item -ItemType Directory -Path $publicVideoFolder -Force | Out-Null
+Copy-Item -LiteralPath $video -Destination (Join-Path $publicVideoFolder 'ra-vlog.mp4') -Force
+Copy-Item -LiteralPath $poster -Destination (Join-Path $siteRoot 'public\assets\ra-vlog-poster.jpg') -Force
 Get-Item -LiteralPath $Source,$video,$poster | Select-Object Name,Length
 Write-Output 'Prepared playback copy. Next run: php artisan app:import-about-video'

@@ -17,3 +17,35 @@ th { background: #f3ece3; } td { overflow-wrap: anywhere; } td select { margin-b
 .login-card input { width: 100%; margin: 6px 0 18px; } .notice { color: #356029; } .errors { color: #982727; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 :focus-visible { outline: 2px solid #a8753d; outline-offset: 3px; }
+
+/* Keep controls usable while wide data tables scroll inside their own region. */
+main, .filters > *, .table-wrap { min-width: 0; }
+h1, h2, .notice, .errors { overflow-wrap: anywhere; }
+.admin-header { gap: 16px; flex-wrap: wrap; }
+.admin-header > a { min-height: 44px; }
+.admin-header form { margin: 0; }
+button, .button, input, select { min-height: 44px; }
+input, select { font-size: 16px; }
+.table-wrap { position: relative; max-width: 100%; overscroll-behavior-inline: contain; }
+.table-wrap table { min-width: 720px; }
+.subscribers-table table { min-width: 460px; }
+.pagination { flex-wrap: wrap; gap: 12px 24px; }
+.pagination a { display: inline-flex; align-items: center; min-height: 44px; }
+.filters > a:not(.button) { display: inline-flex; align-items: center; min-height: 44px; }
+@media (max-width: 768px) {
+  main { padding: 24px 5vw 48px; }
+  .filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .filters input, .filters select { width: 100%; }
+  .filters .button { grid-column: 1 / -1; text-align: center; }
+  th, td { padding: 12px; }
+  .login-card { margin: 16px auto; padding: 24px; }
+}
+@media (max-width: 420px) {
+  .admin-header { padding: 16px 5vw; }
+  .admin-header > a { font-size: 14px; }
+  .admin-header button { padding-inline: 12px; }
+  h1 { font-size: 28px; line-height: 1.2; }
+  .filters { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .login-card { padding: 20px; }
+  .login-card button { width: 100%; }
+}

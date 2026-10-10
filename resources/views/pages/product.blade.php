@@ -1,7 +1,7 @@
 @extends('layouts.site')
 @section('title', 'Jewellery | R.A. Parikh Jewellers')
 @section('description', 'R.A. Parikh jewellery detail')
-@section('bodyClass', '')
+@section('bodyClass', 'product-page')
 @section('hideNavigation', 'true')
 @push('styles')
 <link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/product.css') }}">

@@ -50,7 +50,7 @@ The dashboard lists enquiries and newsletter signups, filters enquiries by statu
 - Honeypot fields and per-IP rate limits reduce automated abuse.
 - Appointment dates use Asia/Kolkata. A morning/evening preference is a request, not an automatically confirmed booking.
 - Submission timestamps are stored in UTC and displayed in India time in the dashboard.
-- Email delivery, newsletter campaigns, and automatic appointment confirmation are not enabled. Submissions are stored for the team to review.
+- New enquiries queue a branded thank-you email for the submitting visitor. Live delivery requires the Gmail sender settings and a running worker; see [enquiry email setup](docs/ENQUIRY-EMAIL.md). Newsletter campaigns and automatic appointment confirmation are not enabled.
 - Existing .html URLs redirect to their Laravel routes, preserving query strings.
 
 ## Project files
@@ -72,7 +72,7 @@ The dashboard lists enquiries and newsletter signups, filters enquiries by statu
     php artisan optimize
     node --check public/js/forms.js
 
-Verification completed locally: 28 automated tests (199 assertions), compiled Blade templates, valid Composer metadata, and real browser AJAX submissions persisted in MySQL. Browser checks also covered missing/invalid CSRF credentials without trusted origin metadata, retained input after server/network errors, duplicate clicks, newsletter deduplication, mobile viewport fit, and protected admin access. Synthetic database records were removed after verification.
+Verification completed locally: 33 automated tests (234 assertions), compiled Blade templates, valid Composer metadata, and real browser AJAX submissions persisted in MySQL. Browser checks also covered missing/invalid CSRF credentials without trusted origin metadata, retained input after server/network errors, duplicate clicks, newsletter deduplication, mobile viewport fit, and protected admin access. Synthetic database records were removed after verification.
 
 Automated feature tests use SQLite in memory, not the local MySQL database. They cover form persistence, validation, duplicate requests, spam fields, India-date handling, rate limits, database failure handling, non-JavaScript submissions, administrator access, login/logout, escaped messages, CSV export, cache privacy, stable cursor pagination, bounded queries, and export limits.
 

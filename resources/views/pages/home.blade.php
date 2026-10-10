@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="showroom-copy">
-        <h1>A home for<br><em>timeless<br>jewellery.</em></h1>
+        <h1>A home for<br><em>timeless<br> jewellery.</em></h1>
         <p>Discover timeless designs, crafted to become part of your story.</p>
       </div>
     </section>
@@ -26,7 +26,7 @@
     <section class="collection-section section-pad" id="collections" aria-labelledby="collection-title">
       <div class="section-heading reveal">
         <p class="eyebrow">The Sets</p>
-        <h2 id="collection-title">Pieces for your<br><em>most remembered</em> days.</h2>
+        <h2 id="collection-title">Tap to explore <br><em>our journey</em> days.</h2>
         <a class="text-link" href="{{ route('collections') }}"><span>View all pieces</span><span>↗</span></a>
       </div>
       <div class="collection-grid" data-horizontal-scroll tabindex="0" aria-label="Jewellery collections. Scroll horizontally to explore.">

@@ -1,25 +1,3 @@
-const menuToggle = document.querySelector('.menu-button');
-const nav = document.querySelector('.main-nav');
-const header = document.querySelector('.site-header');
-
-const updateHeader = () => header.classList.toggle('scrolled', window.scrollY > 16);
-updateHeader();
-window.addEventListener('scroll', updateHeader, { passive: true });
-
-menuToggle.addEventListener('click', () => {
-  const isOpen = nav.classList.toggle('open');
-  menuToggle.setAttribute('aria-expanded', String(isOpen));
-  menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-});
-
-document.querySelectorAll('.main-nav a').forEach((link) => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.setAttribute('aria-label', 'Open menu');
-  });
-});
-
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -53,6 +31,16 @@ document.querySelectorAll('.person-card').forEach((card) => {
   let inView = false;
   let wantsPlayback = !reducedMotion.matches && !saveData;
   let automaticPause = false;
+  let sourceLoaded = false;
+
+  // Preloading and playback observers may fire in either order. Load only once
+  // so a late preload callback cannot cancel playback or look like a user pause.
+  const prepareVideo = () => {
+    if (sourceLoaded) return;
+    sourceLoaded = true;
+    video.preload = 'metadata';
+    video.load();
+  };
 
   const pauseOffscreen = () => {
     if (!video.paused) {
@@ -64,6 +52,7 @@ document.querySelectorAll('.person-card').forEach((card) => {
     if (!inView || document.hidden) {
       pauseOffscreen();
     } else if (wantsPlayback && video.paused) {
+      prepareVideo();
       video.play().catch(() => { /* Native play control handles autoplay restrictions. */ });
     }
   };
@@ -73,6 +62,7 @@ document.querySelectorAll('.person-card').forEach((card) => {
     else wantsPlayback = false;
   });
   video.addEventListener('play', () => {
+    sourceLoaded = true;
     wantsPlayback = true;
     if (!inView || document.hidden) pauseOffscreen();
   });
@@ -87,8 +77,7 @@ document.querySelectorAll('.person-card').forEach((card) => {
     if (!saveData) {
       const preloadObserver = new IntersectionObserver((entries, observer) => {
         if (entries.some(entry => entry.isIntersecting)) {
-          video.preload = 'metadata';
-          video.load();
+          prepareVideo();
           observer.disconnect();
         }
       }, { rootMargin: '300px' });

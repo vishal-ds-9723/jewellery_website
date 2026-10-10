@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Pixel Swarm Button Animation
+   Extracted from the "View all pieces" button
+   --------------------------------------------------------------------------
+   A dynamic 3D pixel-scatter assemble/disperse animation for buttons and links.
+
+   HTML Usage:
+     <a href="#" class="pixel-swarm-button" data-pixel-swarm>
+       <span>View all pieces</span>
+       <span>↗</span>
+     </a>
+
+   JS Initialization:
+     Include public/js/button.js or run:
+     initPixelSwarm(document.querySelector('[data-pixel-swarm]'));
+   ========================================================================== */
+
+:root {
+  --swarm-ink: var(--ink, #18110c);
+  --swarm-gold: var(--gold, #c89d5c);
+  --swarm-white: #ffffff;
+}
+
+.pixel-swarm-button,
+.btn-pixel-swarm,
+[data-pixel-swarm] {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 19px;
+  border: 0;
+  background: transparent;
+  color: var(--swarm-ink);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  perspective: 650px;
+  transform-style: preserve-3d;
+  transition: color .18s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.pixel-swarm-button .pixel-swarm,
+.btn-pixel-swarm .pixel-swarm,
+[data-pixel-swarm] .pixel-swarm {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+.pixel-swarm-button > span:not(.pixel-swarm),
+.btn-pixel-swarm > span:not(.pixel-swarm),
+[data-pixel-swarm] > span:not(.pixel-swarm) {
+  position: relative;
+  z-index: 1;
+}
+
+.pixel-swarm-button .swarm-pixel,
+.btn-pixel-swarm .swarm-pixel,
+[data-pixel-swarm] .swarm-pixel {
+  position: absolute;
+  left: calc(var(--column) * 5.5556%);
+  top: calc(var(--row) * 20%);
+  width: 5.7%;
+  height: 20.5%;
+  opacity: 0;
+  background: var(--swarm-ink);
+  box-shadow: none;
+  transform: translate3d(var(--scatter-x), var(--scatter-y), var(--scatter-z)) rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) scale(.35);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.pixel-swarm-button.is-swarming .swarm-pixel,
+.btn-pixel-swarm.is-swarming .swarm-pixel,
+[data-pixel-swarm].is-swarming .swarm-pixel {
+  animation: swarm-pixel-assemble .78s cubic-bezier(.16, .84, .3, 1) forwards;
+  animation-delay: var(--delay);
+}
+
+.pixel-swarm-button.is-dispersing .swarm-pixel,
+.btn-pixel-swarm.is-dispersing .swarm-pixel,
+[data-pixel-swarm].is-dispersing .swarm-pixel {
+  animation: swarm-pixel-assemble .62s cubic-bezier(.7, 0, .84, .16) reverse both;
+  animation-delay: 0ms;
+}
+
+.pixel-swarm-button.is-swarming,
+.btn-pixel-swarm.is-swarming,
+[data-pixel-swarm].is-swarming {
+  color: var(--swarm-white);
+  transition-delay: .38s;
+}
+
+.pixel-swarm-button.is-dispersing,
+.btn-pixel-swarm.is-dispersing,
+[data-pixel-swarm].is-dispersing {
+  color: var(--swarm-ink);
+  transition-delay: .12s;
+}
+
+.pixel-swarm-button:focus-visible,
+.btn-pixel-swarm:focus-visible,
+[data-pixel-swarm]:focus-visible {
+  outline: 2px solid var(--gold, #c89d5c);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-swarm-button .pixel-swarm,
+  .btn-pixel-swarm .pixel-swarm,
+  [data-pixel-swarm] .pixel-swarm {
+    display: none;
+  }
+}
+
+@keyframes swarm-pixel-assemble {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--scatter-x), var(--scatter-y), var(--scatter-z)) rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) scale(.35);
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  82%,
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0) rotateY(0) scale(1.08);
+  }
+}

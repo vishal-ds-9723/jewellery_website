@@ -38,6 +38,12 @@ for ($attempt = 0; $attempt -lt 30; $attempt++) {
     try {
         $response = Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:$Port/up" -TimeoutSec 2
         if ($response.StatusCode -eq 200) {
+            # Warm Blade through Apache before reporting readiness. On Windows,
+            # simultaneous first-time compilation can collide on file renames.
+            foreach ($page in @('/', '/about', '/collections', '/contact', '/product?item=noor', '/admin/login')) {
+                $warmResponse = Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:$Port$page" -TimeoutSec 15
+                if ($warmResponse.StatusCode -ne 200) { throw "Page warmup failed: $page" }
+            }
             Write-Output "XAMPP Apache is running at http://127.0.0.1:$Port (project PID $($instance.Id))."
             exit 0
         }

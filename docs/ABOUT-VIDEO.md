@@ -1,6 +1,6 @@
 # About showroom video
 
-The About page displays the showroom video immediately before ?Find a piece for you.?
+The About page displays the showroom video immediately above the "Visit our showroom / Find a piece for you" section.
 
 Spatie Laravel Media Library 11 manages the video and poster through App\Models\SiteVideo. Files live on the media disk in public/media/{media-id}/. This uses Apache static-file delivery with byte-range support; PHP does not stream the video or encode it during web requests.
 
@@ -40,3 +40,17 @@ The browser check tests deferred loading, HTTP 206 byte ranges, seeking, pause/r
 Run tests/browser/about-video.cjs with a local headless Chromium/Edge debugging endpoint at 127.0.0.1:9223 and the site at http://127.0.0.1:8088. It saves a report and mobile screenshot under storage/app/private/. PHP feature tests also cover repeatable imports, original-file preservation, cache invalidation, and placement before the closing section.
 
 [Media Library documentation](https://spatie.be/docs/laravel-medialibrary/v11/introduction)
+
+## Fresh live installation
+
+The player keeps its existing position above the showroom invitation. Media Library is preferred. Before the first import, the page uses public/videos/ra-vlog.mp4 (the prepared 4.46 MB copy), or public/RA VLOG.mp4 if only the original is available. This also works when empty library metadata was previously cached. No import or encoding runs during page requests. If no video is available, the page omits the player.
+
+Upload app/Http/Controllers/AboutController.php, app/Console/Commands/ImportAboutVideo.php, public/js/about.js, public/videos/ra-vlog.mp4, and public/assets/ra-vlog-poster.jpg with the existing About view and CSS. The preparation script refreshes both public assets when preparing a replacement source.
+
+On the live server, run the following from the folder containing artisan to register the prepared video and poster with Media Library:
+
+    php artisan app:import-about-video
+
+The default import checks the private prepared copy, then the public prepared copy, then the original. Ensure public/media is writable. If the host caches HTML, purge the /about page after deployment. The current page cache lifetime is 60 seconds.
+
+The playback code now loads the source only once, preventing the preload observer from interrupting autoplay. The latest local browser run passed desktop playback, HTTP 206 seeking, offscreen pause/resume, manual pause, reduced motion, and 375-pixel mobile layout; playback advanced 2.99 seconds during a 3-second observation at simulated 3 Mbps. Five focused PHP tests passed (33 assertions), including the fresh-database fallback.

@@ -33,3 +33,4 @@ Thumbs.db
 
 /public/media/
 /storage/framework/video-tools/
+.env.prod

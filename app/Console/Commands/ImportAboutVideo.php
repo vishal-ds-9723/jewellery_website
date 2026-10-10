@@ -15,8 +15,14 @@ class ImportAboutVideo extends Command
     public function handle(): int
     {
         $optimized = storage_path('app/private/about-video/ra-vlog.mp4');
-        $source = $this->argument('video') ?: (is_file($optimized) ? $optimized : public_path('RA VLOG.mp4'));
+        $published = public_path('videos/ra-vlog.mp4');
+        $source = $this->argument('video') ?: (is_file($optimized) ? $optimized
+            : (is_file($published) ? $published : public_path('RA VLOG.mp4')));
         $poster = $this->option('poster') ?: ($this->argument('video') ? null : storage_path('app/private/about-video/ra-vlog-poster.jpg'));
+
+        if (! $this->argument('video') && ! $this->option('poster') && ! is_file($poster)) {
+            $poster = public_path('assets/ra-vlog-poster.jpg');
+        }
 
         if (! is_file($source)) {
             $this->error('Video not found: '.$source);

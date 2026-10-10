@@ -40,7 +40,7 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
 
-document.querySelectorAll('.section-heading .text-link').forEach((button) => {
+document.querySelectorAll('[data-pixel-swarm], .pixel-swarm-button, .btn-pixel-swarm').forEach((button) => {
   const swarm = document.createElement('span');
   swarm.className = 'pixel-swarm';
   swarm.setAttribute('aria-hidden', 'true');
@@ -92,65 +92,161 @@ document.querySelectorAll('.section-heading .text-link').forEach((button) => {
 const collectionScroller = document.querySelector('[data-horizontal-scroll]');
 const previousCollectionButton = document.querySelector('[data-scroll-previous]');
 const nextCollectionButton = document.querySelector('[data-scroll-next]');
-let collectionScrollTarget = collectionScroller.scrollLeft;
-let collectionScrollFrame = null;
 
-const updateCollectionControls = () => {
-  const maximum = collectionScroller.scrollWidth - collectionScroller.clientWidth;
-  previousCollectionButton.disabled = collectionScroller.scrollLeft <= 1;
-  nextCollectionButton.disabled = collectionScroller.scrollLeft >= maximum - 1;
-};
+let isDraggingCollection = false;
+let hasDraggedCollection = false;
 
-const scrollCollectionByCard = (direction) => {
-  const card = collectionScroller.querySelector('.product-card');
-  const gap = parseFloat(getComputedStyle(collectionScroller).gap) || 0;
-  const distance = card.getBoundingClientRect().width + gap;
+if (collectionScroller) {
+  const getCardPositions = () => {
+    const cards = Array.from(collectionScroller.querySelectorAll('.product-card'));
+    if (!cards.length) return [];
+    const baseOffset = cards[0].offsetLeft;
+    return cards.map(c => Math.max(0, c.offsetLeft - baseOffset));
+  };
 
-  collectionScrollTarget = Math.max(
-    0,
-    Math.min(collectionScroller.scrollWidth - collectionScroller.clientWidth, collectionScroller.scrollLeft + (distance * direction)),
-  );
+  const updateCollectionControls = () => {
+    if (!previousCollectionButton || !nextCollectionButton) return;
+    const maximum = collectionScroller.scrollWidth - collectionScroller.clientWidth;
+    previousCollectionButton.disabled = collectionScroller.scrollLeft <= 3;
+    nextCollectionButton.disabled = collectionScroller.scrollLeft >= maximum - 3;
+  };
 
-  if (collectionScrollFrame === null) {
-    collectionScrollFrame = window.requestAnimationFrame(animateCollectionScroll);
+  const scrollCollectionByCard = (direction) => {
+    const positions = getCardPositions();
+    const current = collectionScroller.scrollLeft;
+    const maxScroll = collectionScroller.scrollWidth - collectionScroller.clientWidth;
+
+    let target;
+    if (positions.length > 0) {
+      if (direction > 0) {
+        target = positions.find(pos => pos > current + 8);
+        if (target === undefined) target = maxScroll;
+      } else {
+        const prevPositions = positions.filter(pos => pos < current - 8);
+        target = prevPositions.length ? prevPositions[prevPositions.length - 1] : 0;
+      }
+    } else {
+      const card = collectionScroller.querySelector('.product-card');
+      const gap = parseFloat(getComputedStyle(collectionScroller).gap) || 25;
+      const distance = card ? card.getBoundingClientRect().width + gap : 360;
+      target = current + (distance * direction);
+    }
+
+    target = Math.max(0, Math.min(maxScroll, target));
+    collectionScroller.scrollTo({
+      left: target,
+      behavior: 'smooth'
+    });
+  };
+
+  if (previousCollectionButton) {
+    previousCollectionButton.addEventListener('click', () => scrollCollectionByCard(-1));
   }
-};
-
-const animateCollectionScroll = () => {
-  const distance = collectionScrollTarget - collectionScroller.scrollLeft;
-
-  if (Math.abs(distance) < 0.5) {
-    collectionScroller.scrollLeft = collectionScrollTarget;
-    collectionScrollFrame = null;
-    return;
+  if (nextCollectionButton) {
+    nextCollectionButton.addEventListener('click', () => scrollCollectionByCard(1));
   }
 
-  collectionScroller.scrollLeft += distance * 0.12;
-  collectionScrollFrame = window.requestAnimationFrame(animateCollectionScroll);
-};
-
-collectionScroller.addEventListener('wheel', (event) => {
-  const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
-  const multiplier = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 24 : event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? collectionScroller.clientWidth : 1;
-  const amount = delta * multiplier;
-  const maximum = collectionScroller.scrollWidth - collectionScroller.clientWidth;
-
-  collectionScrollTarget = Math.max(0, Math.min(maximum, collectionScrollTarget + amount));
-
-  if (collectionScrollFrame === null) {
-    collectionScrollFrame = window.requestAnimationFrame(animateCollectionScroll);
-  }
-}, { passive: true });
-
-collectionScroller.addEventListener('scroll', () => {
-  if (collectionScrollFrame === null) collectionScrollTarget = collectionScroller.scrollLeft;
+  collectionScroller.addEventListener('scroll', updateCollectionControls, { passive: true });
+  window.addEventListener('resize', updateCollectionControls);
   updateCollectionControls();
-}, { passive: true });
 
-previousCollectionButton.addEventListener('click', () => scrollCollectionByCard(-1));
-nextCollectionButton.addEventListener('click', () => scrollCollectionByCard(1));
-window.addEventListener('resize', updateCollectionControls);
-updateCollectionControls();
+  // Keyboard navigation on scroller
+  collectionScroller.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      scrollCollectionByCard(-1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollCollectionByCard(1);
+    }
+  });
+
+  // Desktop drag-to-scroll interaction
+  let dragStartX = 0;
+  let dragScrollStart = 0;
+  let dragLastX = 0;
+  let dragLastTime = 0;
+  let dragVelocityX = 0;
+
+  collectionScroller.addEventListener('mousedown', (event) => {
+    if (event.button !== 0) return;
+    isDraggingCollection = true;
+    hasDraggedCollection = false;
+    dragStartX = event.pageX;
+    dragScrollStart = collectionScroller.scrollLeft;
+    dragLastX = event.pageX;
+    dragLastTime = performance.now();
+    dragVelocityX = 0;
+    collectionScroller.classList.add('is-dragging');
+  });
+
+  window.addEventListener('mousemove', (event) => {
+    if (!isDraggingCollection) return;
+    const now = performance.now();
+    const dt = now - dragLastTime;
+    const dx = event.pageX - dragLastX;
+    if (dt > 0) {
+      dragVelocityX = dx / dt;
+    }
+    dragLastX = event.pageX;
+    dragLastTime = now;
+
+    const totalWalk = event.pageX - dragStartX;
+    if (Math.abs(totalWalk) > 6) {
+      hasDraggedCollection = true;
+    }
+    collectionScroller.scrollLeft = dragScrollStart - totalWalk;
+  });
+
+  const stopCollectionDrag = () => {
+    if (!isDraggingCollection) return;
+    isDraggingCollection = false;
+    collectionScroller.classList.remove('is-dragging');
+
+    if (hasDraggedCollection) {
+      const positions = getCardPositions();
+      const current = collectionScroller.scrollLeft;
+      const maxScroll = collectionScroller.scrollWidth - collectionScroller.clientWidth;
+      let target = current;
+
+      if (positions.length > 0) {
+        if (Math.abs(dragVelocityX) > 0.35) {
+          if (dragVelocityX < 0) {
+            const nextPos = positions.find(pos => pos > current + 12);
+            target = nextPos !== undefined ? nextPos : maxScroll;
+          } else {
+            const prevPositions = positions.filter(pos => pos < current - 12);
+            target = prevPositions.length ? prevPositions[prevPositions.length - 1] : 0;
+          }
+        } else {
+          let closest = positions[0];
+          let minDiff = Infinity;
+          for (const pos of positions) {
+            const diff = Math.abs(pos - current);
+            if (diff < minDiff) {
+              minDiff = diff;
+              closest = pos;
+            }
+          }
+          target = closest;
+        }
+      }
+
+      target = Math.max(0, Math.min(maxScroll, target));
+      collectionScroller.scrollTo({
+        left: target,
+        behavior: 'smooth'
+      });
+
+      setTimeout(() => {
+        hasDraggedCollection = false;
+      }, 60);
+    }
+  };
+
+  window.addEventListener('mouseup', stopCollectionDrag);
+  document.addEventListener('mouseleave', stopCollectionDrag);
+}
 
 const toggleJewelleryFocus = (card) => {
   const isFocused = card.classList.toggle('is-jewellery-focus');
@@ -165,7 +261,10 @@ document.querySelectorAll('.collection-grid .product-card').forEach((card) => {
   card.setAttribute('aria-pressed', 'false');
   card.setAttribute('aria-label', `${card.querySelector('h3').textContent}: show jewellery spotlight`);
 
-  card.addEventListener('click', () => toggleJewelleryFocus(card));
+  card.addEventListener('click', () => {
+    if (hasDraggedCollection) return;
+    toggleJewelleryFocus(card);
+  });
   card.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();

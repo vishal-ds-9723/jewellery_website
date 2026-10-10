@@ -1,25 +1,3 @@
-const menuButton = document.querySelector('.menu-button');
-const nav = document.querySelector('.main-nav');
-const header = document.querySelector('.site-header');
-
-const updateHeader = () => header.classList.toggle('scrolled', window.scrollY > 16);
-updateHeader();
-window.addEventListener('scroll', updateHeader, { passive: true });
-
-menuButton.addEventListener('click', () => {
-  const isOpen = nav.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', String(isOpen));
-  menuButton.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-});
-
-document.querySelectorAll('.main-nav a').forEach((link) => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    menuButton.setAttribute('aria-expanded', 'false');
-    menuButton.setAttribute('aria-label', 'Open menu');
-  });
-});
-
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -39,5 +17,46 @@ document.querySelectorAll('[data-filter]').forEach((button) => {
     document.querySelectorAll('.product-card').forEach((card) => {
       card.hidden = filter !== 'all' && card.dataset.category !== filter;
     });
+  });
+});
+
+// Native buttons support mouse, touch, Enter, and Space without navigation.
+document.querySelectorAll('.product-image[aria-pressed]:not([data-background-toggle])').forEach((button) => {
+  const card = button.closest('.product-card');
+  const name = card.querySelector('h3').textContent;
+  const focusImage = button.querySelector('.product-image-focus');
+  const updateLabel = (focused) => button.setAttribute('aria-label',
+    name + ': ' + (focused ? 'show normal portrait' : 'show jewellery spotlight'));
+
+  button.addEventListener('click', async () => {
+    const focused = button.getAttribute('aria-pressed') !== 'true';
+    button.setAttribute('aria-pressed', String(focused));
+    updateLabel(focused);
+    if (!focused) {
+      card.classList.remove('is-jewellery-focus');
+      return;
+    }
+
+    // Keep the colour portrait visible until its alternate image is decoded.
+    try {
+      focusImage.loading = 'eager';
+      await focusImage.decode();
+      if (button.getAttribute('aria-pressed') === 'true') {
+        card.classList.add('is-jewellery-focus');
+      }
+    } catch {
+      button.setAttribute('aria-pressed', 'false');
+      updateLabel(false);
+    }
+  });
+});
+
+// Transparent jewellery photos keep their colour as the background changes.
+document.querySelectorAll('[data-background-toggle]').forEach((button) => {
+  const name = button.querySelector('img').alt;
+  button.addEventListener('click', () => {
+    const dark = button.getAttribute('aria-pressed') !== 'true';
+    button.setAttribute('aria-pressed', String(dark));
+    button.setAttribute('aria-label', name + ': show ' + (dark ? 'light' : 'dark') + ' background');
   });
 });

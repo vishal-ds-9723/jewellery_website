@@ -5,8 +5,7 @@
 @push('styles')
 <link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/collections.css') }}">
 <link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/shared.css') }}">
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/collection-links.css') }}">
-<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/mens-collection.css') }}">
+<link rel="stylesheet" href="{{ \App\Support\SiteAsset::url('css/collection-focus.css') }}">
 @endpush
 @section('content')
 <main>
@@ -21,60 +20,29 @@
 
     <section class="catalogue" id="collection-grid" aria-labelledby="catalogue-title">
       <div class="catalogue-heading reveal">
-        <div><p class="eyebrow">All collections</p><h2 id="catalogue-title">Find the one<br><em>you keep.</em></h2></div>
-        <div class="filters" aria-label="Filter collections">
-          <button class="active" type="button" data-filter="all">All</button>
-          <button type="button" data-filter="bridal">Bridal</button>
-          <button type="button" data-filter="signature">Signature</button>
-          <button type="button" data-filter="everyday">Everyday</button>
-        </div>
+        <div><p class="eyebrow">All collections</p><h2 id="catalogue-title">Tap to explore<br><em>our journey.</em></h2></div>
+        
       </div>
 
       <div class="collection-grid">
-        <article class="product-card reveal" data-category="bridal"><a href="{{ route('product') }}?item=noor"><div class="product-image tall"><img decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-1.jpeg') }}" alt="Woman wearing the Noor bridal set"></div><div class="product-meta"><div><p>Bridal edit</p><h3>The Noor Set</h3></div><span>From ₹1,85,000</span></div></a></article>
-        <article class="product-card reveal" data-category="signature"><a href="{{ route('product') }}?item=gul"><div class="product-image"><img decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-2.jpeg') }}" alt="Woman wearing Gul Jhumka jewellery"></div><div class="product-meta"><div><p>Signature</p><h3>Gul Jhumka</h3></div><span>From ₹48,000</span></div></a></article>
-        <article class="product-card reveal" data-category="everyday"><a href="{{ route('product') }}?item=meher"><div class="product-image"><img decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-3.jpeg') }}" alt="Woman wearing the Meher necklace"></div><div class="product-meta"><div><p>Everyday heirloom</p><h3>Meher Necklace</h3></div><span>From ₹72,000</span></div></a></article>
-        <article class="product-card reveal" data-category="signature"><a href="{{ route('product') }}?item=sitara"><div class="product-image"><img decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-4.jpeg') }}" alt="Woman wearing Sitara jewellery"></div><div class="product-meta"><div><p>Signature</p><h3>Sitara Jhumka</h3></div><span>From ₹52,000</span></div></a></article>
-        <article class="product-card reveal" data-category="bridal"><a href="{{ route('product') }}?item=rani"><div class="product-image tall"><img decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-5.jpeg') }}" alt="Woman wearing the Rani bridal set"></div><div class="product-meta"><div><p>Bridal edit</p><h3>The Rani Set</h3></div><span>From ₹2,10,000</span></div></a></article>
-        <article class="product-card reveal" data-category="everyday"><a href="{{ route('product') }}?item=nira"><div class="product-image"><img decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-6.jpeg') }}" alt="Woman wearing the Nira pendant"></div><div class="product-meta"><div><p>Everyday heirloom</p><h3>Nira Pendant</h3></div><span>From ₹42,000</span></div></a></article>
-        <article class="product-card reveal" data-category="signature"><a href="{{ route('product') }}?item=zoya"><div class="product-image"><img decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-7.jpeg') }}" alt="Woman wearing Zoya jewellery"></div><div class="product-meta"><div><p>Signature</p><h3>Zoya Drops</h3></div><span>From ₹58,000</span></div></a></article>
-      </div>
-    </section>
-
-    <section class="mens-collection" aria-labelledby="mens-collection-title">
-      <div class="mens-heading reveal">
-        <p class="eyebrow">For him</p>
-        <h2 id="mens-collection-title">The men's<br><em>collection.</em></h2>
-        <p>Gold chains and bracelets with a strong, considered presence.</p>
-      </div>
-
-      <div class="mens-grid">
-        <article class="mens-card reveal">
-          <a class="mens-product-link" href="{{ route('product') }}?item=mens-rope-chain"><img decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-1.jpeg') }}" alt="Man wearing the Royal Rope gold chain and bracelet"><h3>Royal Rope Chain</h3></a>
+        <article class="product-card reveal" data-category="bridal"><button class="product-image tall" type="button" aria-pressed="false" aria-label="The Noor Set: show jewellery spotlight"><img class="product-image-base" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-1.jpeg') }}" alt="Woman wearing the Noor bridal set"><img class="product-image-focus" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-1-focus.png') }}" alt="" aria-hidden="true"></button><div class="product-meta"><div><p>Bridal edit</p><h3>The Noor Set</h3></div><span>From ₹1,85,000</span></div></article>
+        <article class="product-card reveal" data-category="signature"><button class="product-image" type="button" aria-pressed="false" aria-label="Gul Jhumka: show jewellery spotlight"><img class="product-image-base" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-2.jpeg') }}" alt="Woman wearing Gul Jhumka jewellery"><img class="product-image-focus" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-2-focus.png') }}" alt="" aria-hidden="true"></button><div class="product-meta"><div><p>Signature</p><h3>Gul Jhumka</h3></div><span>From ₹48,000</span></div></article>
+        <article class="product-card reveal" data-category="everyday"><button class="product-image" type="button" aria-pressed="false" aria-label="Meher Necklace: show jewellery spotlight"><img class="product-image-base" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-3.jpeg') }}" alt="Woman wearing the Meher necklace"><img class="product-image-focus" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-3-focus.png') }}" alt="" aria-hidden="true"></button><div class="product-meta"><div><p>Everyday heirloom</p><h3>Meher Necklace</h3></div><span>From ₹72,000</span></div></article>
+        <article class="product-card reveal" data-category="signature"><button class="product-image" type="button" aria-pressed="false" aria-label="Sitara Jhumka: show jewellery spotlight"><img class="product-image-base" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-4.jpeg') }}" alt="Woman wearing Sitara jewellery"><img class="product-image-focus" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-4-focus.png') }}" alt="" aria-hidden="true"></button><div class="product-meta"><div><p>Signature</p><h3>Sitara Jhumka</h3></div><span>From ₹52,000</span></div></article>
+        <article class="product-card reveal" data-category="bridal"><button class="product-image tall" type="button" aria-pressed="false" aria-label="The Rani Set: show jewellery spotlight"><img class="product-image-base" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-5.jpeg') }}" alt="Woman wearing the Rani bridal set"><img class="product-image-focus" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-5-focus.png') }}" alt="" aria-hidden="true"></button><div class="product-meta"><div><p>Bridal edit</p><h3>The Rani Set</h3></div><span>From ₹2,10,000</span></div></article>
+        <article class="product-card reveal" data-category="everyday"><button class="product-image" type="button" aria-pressed="false" aria-label="Nira Pendant: show jewellery spotlight"><img class="product-image-base" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-6.jpeg') }}" alt="Woman wearing the Nira pendant"><img class="product-image-focus" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-6-focus.png') }}" alt="" aria-hidden="true"></button><div class="product-meta"><div><p>Everyday heirloom</p><h3>Nira Pendant</h3></div><span>From ₹42,000</span></div></article>
+        <article class="product-card reveal" data-category="signature"><button class="product-image" type="button" aria-pressed="false" aria-label="Zoya Drops: show jewellery spotlight"><img class="product-image-base" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-7.jpeg') }}" alt="Woman wearing Zoya jewellery"><img class="product-image-focus" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-person-7-focus.png') }}" alt="" aria-hidden="true"></button><div class="product-meta"><div><p>Signature</p><h3>Zoya Drops</h3></div><span>From ₹58,000</span></div></article>
+        <article class="product-card reveal" data-category="mens"><button class="product-image" type="button" aria-pressed="false" aria-label="Royal Rope Chain: show jewellery spotlight"><img class="product-image-base" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-1.jpeg') }}" alt="Man wearing the Royal Rope gold chain and bracelet"><img class="product-image-focus" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-1-focus.png') }}" alt="" aria-hidden="true"></button><div class="product-meta"><div><p>Men's edit</p><h3>Royal Rope Chain</h3></div></div></article>
+        <article class="product-card reveal" data-category="mens"><button class="product-image" type="button" aria-pressed="false" aria-label="Signature Link Chain: show jewellery spotlight"><img class="product-image-base" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-2.jpeg') }}" alt="Man wearing the Signature Link gold chain and bracelet"><img class="product-image-focus" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-2-focus.png') }}" alt="" aria-hidden="true"></button><div class="product-meta"><div><p>Men's edit</p><h3>Signature Link Chain</h3></div></div></article>
+        <article class="product-card reveal" data-category="mens"><button class="product-image" type="button" aria-pressed="false" aria-label="Classic Gold Chain: show jewellery spotlight"><img class="product-image-base" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-3.jpeg') }}" alt="Man wearing the Classic Gold chain and wrist jewellery"><img class="product-image-focus" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-3-focus.png') }}" alt="" aria-hidden="true"></button><div class="product-meta"><div><p>Men's edit</p><h3>Classic Gold Chain</h3></div></div></article>
+        <article class="product-card reveal" data-category="mens"><button class="product-image" type="button" aria-pressed="false" aria-label="Heritage Link Chain: show jewellery spotlight"><img class="product-image-base" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-4.jpeg') }}" alt="Man wearing the Heritage Link gold chain and bracelet"><img class="product-image-focus" decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-4-focus.png') }}" alt="" aria-hidden="true"></button><div class="product-meta"><div><p>Men's edit</p><h3>Heritage Link Chain</h3></div></div></article>
+        @foreach (array_diff(range(1, 15), [7, 9, 11]) as $design)
+        <article class="product-card jewellery-set-card reveal" data-category="everyday">
+          <button class="product-image" type="button" data-background-toggle aria-pressed="false" aria-label="Jewellery design {{ $design }}: show dark background">
+            <img decoding="async" loading="lazy" src="{{ asset('jewellery-set-images/'.$design.'.png') }}" alt="Jewellery design {{ $design }}">
+          </button>
         </article>
-        <article class="mens-card reveal">
-          <a class="mens-product-link" href="{{ route('product') }}?item=mens-signature-chain"><img decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-2.jpeg') }}" alt="Man wearing the Signature Link gold chain and bracelet"><h3>Signature Link Chain</h3></a>
-        </article>
-        <article class="mens-card reveal">
-          <a class="mens-product-link" href="{{ route('product') }}?item=mens-classic-chain"><img decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-3.jpeg') }}" alt="Man wearing the Classic Gold chain and wrist jewellery"><h3>Classic Gold Chain</h3></a>
-        </article>
-        <article class="mens-card reveal">
-          <a class="mens-product-link" href="{{ route('product') }}?item=mens-heritage-chain"><img decoding="async" loading="lazy" src="{{ asset('assets/ra-parekh-man-4.jpeg') }}" alt="Man wearing the Heritage Link gold chain and bracelet"><h3>Heritage Link Chain</h3></a>
-        </article>
-        <article class="mens-card mens-video-card reveal">
-          <video controls playsinline preload="metadata" aria-label="Men's jewellery video 01">
-            <source src="{{ asset('assets/ra-parekh-man-4-video.mp4') }}" type="video/mp4">
-            Your browser does not support video playback.
-          </video>
-          <h3>Men's Jewellery Film 01</h3>
-        </article>
-        <article class="mens-card mens-video-card reveal">
-          <video controls playsinline preload="metadata" aria-label="Men's jewellery video 02">
-            <source src="{{ asset('assets/ra-parekh-man-4-video-2.mp4') }}" type="video/mp4">
-            Your browser does not support video playback.
-          </video>
-          <h3>Men's Jewellery Film 02</h3>
-        </article>
+        @endforeach
       </div>
     </section>
 

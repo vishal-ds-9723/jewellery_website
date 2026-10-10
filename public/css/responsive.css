@@ -1,0 +1,129 @@
+/* Shared small-screen layout rules, loaded after the individual page styles. */
+main, main section, .site-footer > *, .field-row > *, .product-copy { min-width: 0; }
+main h1, main h2, main h3, .contact-details a { overflow-wrap: break-word; }
+.site-footer > div { flex-wrap: wrap; }
+.site-footer a:not(.wordmark) { display: inline-flex; align-items: center; min-height: 44px; }
+input, select, textarea { min-width: 0; max-width: 100%; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+@media (max-width: 1100px) {
+  /* Form controls remain legible and comfortably sized on touch devices. */
+  .field input, .field select, .field textarea, .contact-form-wrap input { font-size: 16px; min-height: 44px; }
+  .field label { font-size: 11px; letter-spacing: .09em; }
+  .contact-form-wrap button { min-width: 44px; min-height: 44px; }
+  .text-link, .arrow-link, .closing-button, .button, .submit-button { min-height: 44px; }
+  .site-footer { gap: 24px; }
+  .site-footer > p { line-height: 1.6; }
+
+  .collections-page .collections-hero {
+    min-height: clamp(380px, 65svh, 580px);
+    padding: calc(var(--site-header-height, 80px) + 48px) 7vw 64px;
+  }
+  .collections-page .collections-hero h1 { font-size: clamp(40px, 7vw, 76px); }
+  .collections-page .catalogue-heading { display: block; }
+  .collections-page .filters { justify-content: flex-start; margin-top: 28px; }
+  .collections-page .filters button { min-height: 44px; min-width: 64px; }
+  .collections-page .collection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 20px; }
+  .collections-page .product-image, .collections-page .product-image.tall { height: auto; aspect-ratio: 3 / 4; }
+  .collections-page .product-image img { display: block; }
+  .collections-page .product-meta { flex-wrap: wrap; }
+  .mens-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mens-product-link > img { height: auto; aspect-ratio: 3 / 4; }
+  .collection-cta { padding-inline: 7vw; }
+
+  .about-page .intro-section {
+    min-height: 0;
+    padding-top: calc(var(--site-header-height, 80px) + 56px);
+    padding-bottom: 72px;
+  }
+  .about-page .origin-section, .about-page .beliefs-section { display: block; }
+  .about-page .origin-image { height: auto; aspect-ratio: 4 / 3; max-width: 720px; margin: 0 auto 40px; }
+  .about-page .origin-copy { max-width: 680px; }
+  .about-page .beliefs-heading { margin-bottom: 40px; }
+  .about-page .belief-two, .about-page .belief-three { margin-left: 0; }
+
+  .contact-page .contact-layout { display: block; min-height: 0; padding-top: var(--site-header-height, 80px); }
+  .contact-page .contact-visual { height: clamp(240px, 55vw, 480px); min-height: 0; }
+  .contact-page .contact-visual img { display: block; object-fit: contain; }
+  .contact-page .enquiry-panel { height: auto; min-height: 0; overflow: visible; padding: 48px 7vw 64px; }
+  .contact-page .form-heading, .contact-page .enquiry-form { max-width: 760px; margin-inline: auto; }
+  .contact-page .field-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .contact-page .contact-details { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .contact-page .contact-details > p { grid-column: 1 / -1; }
+  .contact-page .contact-details a { overflow-wrap: anywhere; }
+  .contact-page .image-caption { gap: 16px; flex-wrap: wrap; padding: 16px 7vw; }
+  #enquiry-form { scroll-margin-top: calc(var(--site-header-height, 80px) + 20px); }
+
+  .product-page .product-detail { display: block; min-height: 0; }
+  .product-page .product-photo, .product-page .zoom-button { height: clamp(280px, 62svh, 640px); }
+  .product-page .product-photo { overflow: hidden; }
+  .product-page .product-copy { padding: 40px 7vw 64px; max-width: 820px; margin-inline: auto; }
+  .product-page .product-copy h1 { font-size: clamp(36px, 6vw, 60px); }
+  .product-page .product-copy > #product-description { max-width: 56ch; font-size: 16px; }
+  .product-page .back-link { top: 16px; left: 5vw; display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+@media (max-width: 600px) {
+  .section-pad, .about-page .section-shell { padding: 64px 7vw; }
+  .home-page .story-copy h2,
+  .home-page .craft-intro h2, .home-page .appointment-content h2,
+  .home-page .contact-heading h2 { font-size: clamp(34px, 10vw, 47px); }
+  .home-page .section-heading h2,
+  .home-page #collection-title {
+    font-size: clamp(23px, 6.4vw, 32px);
+    line-height: 1.16;
+    letter-spacing: -0.015em;
+    overflow-wrap: break-word;
+  }
+  .home-page .story-image { height: auto; min-height: 0; aspect-ratio: 4 / 5; }
+  .home-page .story-image img { display: block; }
+  .home-page .story-copy { padding: 48px 7vw; }
+  .home-page .appointment-section { min-height: 420px; padding: 64px 7vw; }
+  .home-page .product-meta h3 { font-size: 20px; }
+
+  .collections-page .catalogue { padding: 64px 7vw; }
+  .collections-page .catalogue-heading h2 { font-size: clamp(36px, 10vw, 48px); }
+  .collections-page .collection-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .collections-page .product-card { margin: 0; }
+  .mens-collection { padding: 64px 7vw; }
+  .mens-heading { display: block; margin-bottom: 32px; }
+  .mens-heading h2 { font-size: clamp(36px, 10vw, 48px); }
+  .mens-heading .eyebrow { margin-bottom: 16px; }
+  .mens-heading > p:last-child { margin-top: 20px; }
+  .mens-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .mens-card { margin: 0; }
+  .collection-cta h2 { font-size: clamp(44px, 14vw, 72px); }
+
+  .about-page .intro-section { padding-top: calc(var(--site-header-height, 68px) + 44px); }
+  .about-page .intro-left h1 { font-size: clamp(56px, 17vw, 72px); }
+  .about-page .intro-right { margin-top: 44px; }
+  .about-page .origin-copy h2, .about-page .beliefs-heading h2 { font-size: clamp(36px, 10vw, 52px); }
+  .about-page .belief h3 { font-size: 23px; }
+  .about-page .showroom-film-section { padding-top: 0; }
+  .about-page .closing-section { min-height: 0; padding: 72px 7vw 40px; gap: 36px; }
+  .about-page .closing-content { max-width: 100%; }
+  .about-page .closing-content h2 { font-size: clamp(42px, 12vw, 68px); }
+  .about-page .closing-side-note { position: static; margin: 0; text-align: center; }
+
+  .contact-page .contact-visual { height: clamp(240px, 75vw, 360px); }
+  .contact-page .field-row { display: block; }
+  .contact-page .form-heading h1 { font-size: clamp(30px, 8.5vw, 40px); }
+  .contact-page .submit-button, .product-copy .appointment-cta { width: 100%; }
+  .contact-page .contact-details { display: grid; grid-template-columns: minmax(0, 1fr); padding: 40px 7vw; }
+  .contact-page .contact-details > div { margin-top: 0; }
+  .site-footer { padding: 36px 7vw; }
+}
+
+@media (max-width: 360px) {
+  .home-page .section-heading h2,
+  .home-page #collection-title {
+    font-size: clamp(20px, 6vw, 24px);
+    line-height: 1.18;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .closing-orbit { animation: none; }
+}

@@ -62,8 +62,38 @@ class AboutVideoTest extends TestCase
         }
     }
 
-    public function test_about_still_renders_before_a_video_has_been_imported(): void
+    public function test_fresh_installation_shows_original_video_even_with_empty_library_cached(): void
     {
+        $disk = Storage::fake('public');
+        $this->app->usePublicPath($disk->path(''));
+        $disk->put('RA VLOG.mp4', 'video fixture');
+        Cache::put(SiteVideo::ABOUT_CACHE_KEY, ['url' => '', 'poster' => ''], 3600);
+
+        $this->get('/about')->assertOk()
+            ->assertSee('RA%20VLOG.mp4', false)
+            ->assertSeeInOrder(['id="showroom-film"', 'class="closing-section"', 'Find a piece'], false)
+            ->assertSee('preload="none"', false);
+        $this->assertDatabaseCount('site_videos', 0);
+        $this->assertDatabaseCount('media', 0);
+    }
+
+    public function test_fresh_installation_prefers_prepared_public_video_and_poster(): void
+    {
+        $disk = Storage::fake('public');
+        $this->app->usePublicPath($disk->path(''));
+        $disk->put('RA VLOG.mp4', 'original fixture');
+        $disk->put('videos/ra-vlog.mp4', 'prepared fixture');
+        $disk->put('assets/ra-vlog-poster.jpg', 'poster fixture');
+
+        $this->get('/about')->assertOk()
+            ->assertSee('videos/ra-vlog.mp4', false)
+            ->assertSee('assets/ra-vlog-poster.jpg', false)
+            ->assertDontSee('RA%20VLOG.mp4', false);
+    }
+
+    public function test_about_still_renders_when_no_library_or_public_video_exists(): void
+    {
+        $this->app->usePublicPath(Storage::fake('public')->path(''));
         $this->get('/about')->assertOk()->assertSee('Find a piece')
             ->assertDontSee('id="showroom-film"', false);
     }

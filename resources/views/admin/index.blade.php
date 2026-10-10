@@ -11,7 +11,7 @@
 </form>
 <p>CSV exports include up to {{ number_format($exportLimit) }} records. Filter by date or status for larger lists.</p>
 <p>Showing {{ $enquiries->count() }} enquiries</p>
-<div class="table-wrap">
+<div class="table-wrap" role="region" aria-label="Appointment enquiries" tabindex="0">
 <table>
   <thead><tr><th>Customer</th><th>Appointment</th><th>Enquiry</th><th>Status</th><th>Received</th></tr></thead>
   <tbody>
@@ -40,7 +40,7 @@
 
 <h2>Newsletter subscribers</h2>
 <p>Showing {{ $subscribers->count() }} signups</p>
-<div class="table-wrap">
+<div class="table-wrap subscribers-table" role="region" aria-label="Newsletter subscribers" tabindex="0">
 <table>
   <thead><tr><th>Email</th><th>Signed up (India time)</th></tr></thead>
   <tbody>@forelse($subscribers as $subscriber)<tr><td>{{ $subscriber->email }}</td><td>{{ $subscriber->created_at->timezone('Asia/Kolkata')->format('d M Y, h:i a') }}</td></tr>@empty<tr><td colspan="2">No subscribers yet.</td></tr>@endforelse</tbody>
